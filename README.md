@@ -322,5 +322,42 @@ E pronto! Agora é só testar a API usando a porta `80` do seu host, usando o ip
 (Ex: Localhost -> `http://localhost` ou `http://127.0.0.1`
      AWS EC2   -> `http://123.123.123.123` (IP publico))
 
-## Configuração completa em um AWS EC2
-Criar uma instância AWS EC2, com o tráfego http habilitado, linux com o script de inicialização sendo o arquivo `setup.txt`
+## Configuração completa em um AWS EC2 Linux
+1. Criar uma instância AWS EC2, com o tráfego http habilitado, linux
+2. Conectar á instancia (via AWS Instance Connect ou SSH)
+3. Atualizar linux repository
+```sh
+sudo yum update -y
+```
+4. Instalar git
+```sh
+sudo yum install git -y
+```
+5. Git clone do projeto
+```sh
+git clone https://github.com/matheus-camilo-dev/products-api.git
+```
+
+6. Instalar Docker
+```sh
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+```
+
+7. Instalar Docker composse
+```sh
+sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+```
+
+6. Entrar no diretório do projeto
+```sh
+cd products-api
+```
+
+7. Rodar projeto
+```sh
+sudo docker-compose up --build
+```
